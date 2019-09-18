@@ -2,6 +2,7 @@ package com.mechanitis.demo.ui;
 
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.stage.Stage;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -26,7 +27,12 @@ public class StockChartApplication extends Application {
                 .run();
     }
 
-    //TODO: stop
+    //do we need this? I did run out of memory earlier....
+    @Override
+    public void stop() throws Exception {
+//        this.context.close();
+        Platform.exit();
+    }
 
     static class StageReadyEvent extends ApplicationEvent {
 

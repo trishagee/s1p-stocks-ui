@@ -5,7 +5,8 @@
 <?import javafx.scene.layout.VBox?>
 
 <VBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml">
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.mechanitis.demo.ui.StockController">
     <LineChart fx:id="chart" prefHeight="600">
         <xAxis>
             <CategoryAxis label="Time"/>
