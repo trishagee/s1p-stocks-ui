@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.layout.VBox?>
+
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml">
-
+    <LineChart fx:id="chart" prefHeight="600">
+        <xAxis>
+            <CategoryAxis label="Time"/>
+        </xAxis>
+        <yAxis>
+            <CategoryAxis label="Price"/>
+        </yAxis>
+    </LineChart>
 </VBox>
+

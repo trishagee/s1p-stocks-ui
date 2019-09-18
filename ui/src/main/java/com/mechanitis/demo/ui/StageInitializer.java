@@ -30,6 +30,7 @@ public class StageInitializer implements ApplicationListener<StockChartApplicati
 
             Parent load = fxmlLoader.load();
             stage.setScene(new Scene(load, 800, 600));
+            // TODO: title
             stage.setTitle("Stocks");
             stage.show();
 
