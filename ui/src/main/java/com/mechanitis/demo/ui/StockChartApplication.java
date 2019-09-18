@@ -3,9 +3,12 @@ package com.mechanitis.demo.ui;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationEvent;
 
+@SpringBootApplication
 public class StockChartApplication extends Application {
 
 
@@ -25,11 +28,14 @@ public class StockChartApplication extends Application {
 
     //TODO: stop
 
-    private class StageReadyEvent {
-        private Stage stage;
+    static class StageReadyEvent extends ApplicationEvent {
 
         public StageReadyEvent(Stage stage) {
-            this.stage = stage;
+            super(stage);
+        }
+
+        public Stage getStage() {
+            return (Stage)this.getSource();
         }
     }
 }
