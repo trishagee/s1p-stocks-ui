@@ -24,17 +24,18 @@ public class StockController {
     //this is the controller, and what it does is wires stuff together
     @FXML
     public void initialize() {
-        //series is the UI (View) element
-        final Series<String, Double> series = new Series<>();
+        final String symbol = "FAKE";
 
         final StockPriceWatcher stockPriceWatcher = new StockPriceWatcher();
-        series.setData(stockPriceWatcher.getData());
+        new StubStockClient().pricesFor(symbol).subscribe(stockPriceWatcher);
+
+        //series is the UI (View) element
+        final Series<String, Double> series = new Series<>(symbol, stockPriceWatcher.getData());
 
         //a chart supports more than one series of data, so the data for the chart is a list of series
         //but we only have one element in this list, our single series
         chart.setData(observableArrayList(series));
 
-        new StubStockClient().pricesFor("FAKE").subscribe(stockPriceWatcher);
 
         //A chart has multiple series
         //A series is a list of Data points
