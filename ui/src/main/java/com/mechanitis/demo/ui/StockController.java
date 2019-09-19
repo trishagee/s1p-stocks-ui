@@ -26,8 +26,7 @@ public class StockController {
     public void initialize() {
         final String symbol = "FAKE";
 
-        final StockPriceWatcher stockPriceWatcher = new StockPriceWatcher();
-        new StubStockClient().pricesFor(symbol).subscribe(stockPriceWatcher);
+        final StockPriceWatcher stockPriceWatcher = new StockPriceWatcher(symbol);
 
         //series is the UI (View) element
         final Series<String, Double> series = new Series<>(symbol, stockPriceWatcher.getData());
@@ -42,10 +41,15 @@ public class StockController {
         //Each Data is a pair of String and Double
     }
 
-    // The watcher is subscribed to a data source and updates the list that is displayed as a series
+    // The watcher subscribes to a data source and updates the list that is displayed as a series
     private static class StockPriceWatcher implements Consumer<Double> {
 
         private ObservableList<Data<String, Double>> prices = observableArrayList();
+
+        StockPriceWatcher(String symbol) {
+            //this can't stay like this, because we want to be able to switch out our clients easily
+            StubStockClient.pricesFor(symbol).subscribe(this);
+        }
 
         ObservableList<Data<String, Double>> getData() {
             return prices;

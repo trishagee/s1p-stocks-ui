@@ -12,10 +12,7 @@ public class ClientApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ClientApplication.class, args);
 
-		StubStockClient client = new StubStockClient();
-		Flux<Double> fake = client.pricesFor("FAKE");
-
-		fake.subscribe(System.out::println);
+		StubStockClient.pricesFor("FAKE").subscribe(System.out::println);
 	}
 
 }
