@@ -12,7 +12,7 @@ public class ClientApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ClientApplication.class, args);
 
-		StubStockClient.pricesFor("FAKE").subscribe(System.out::println);
+		new StubStockClient().pricesFor("FAKE").subscribe(System.out::println);
 	}
 
 }

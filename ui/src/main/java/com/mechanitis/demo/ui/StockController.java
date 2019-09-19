@@ -45,7 +45,7 @@ public class StockController {
 
         StockPrices(String symbol) {
             //this can't stay like this, because we want to be able to switch out our clients easily
-            StubStockClient.pricesFor(symbol).subscribe(this);
+            new StubStockClient().pricesFor(symbol).subscribe(this);
             series = new Series<>(symbol, prices);
         }
 
