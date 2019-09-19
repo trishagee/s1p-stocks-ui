@@ -4,6 +4,7 @@
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.chart.NumberAxis?>
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.mechanitis.demo.ui.StockController">
@@ -12,7 +13,7 @@
             <CategoryAxis label="Time"/>
         </xAxis>
         <yAxis>
-            <CategoryAxis label="Price"/>
+            <NumberAxis label="Price"/>
         </yAxis>
     </LineChart>
 </VBox>
