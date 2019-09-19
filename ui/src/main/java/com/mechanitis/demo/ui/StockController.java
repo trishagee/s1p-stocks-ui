@@ -24,38 +24,33 @@ public class StockController {
     //this is the controller, and what it does is wires stuff together
     @FXML
     public void initialize() {
-        final String symbol1 = "FAKE";
-        final String symbol2 = "DUMMY";
-
-        final StockPriceWatcher stockPriceWatcher1 = new StockPriceWatcher(symbol1);
-        final StockPriceWatcher stockPriceWatcher2 = new StockPriceWatcher(symbol2);
-
-        //series is the UI (View) element
-        final Series<String, Double> series1 = new Series<>(symbol1, stockPriceWatcher1.getData());
-        final Series<String, Double> series2 = new Series<>(symbol2, stockPriceWatcher2.getData());
+        final StockPrices stockPrices1 = new StockPrices("FAKE");
+        final StockPrices stockPrices2 = new StockPrices("DUMMY");
 
         //a chart supports more than one series of data, so the data for the chart is a list of series
         //but we only have one element in this list, our single series
-        chart.setData(observableArrayList(series1, series2));
-
+        chart.setData(observableArrayList(stockPrices1.getSeries(), stockPrices2.getSeries()));
 
         //A chart has multiple series
         //A series is a list of Data points
         //Each Data is a pair of String and Double
     }
 
-    // The watcher subscribes to a data source and updates the list that is displayed as a series
-    private static class StockPriceWatcher implements Consumer<Double> {
+    // Subscribes to a data source and updates data to be displayed as a series
+    // Model
+    private static class StockPrices implements Consumer<Double> {
 
-        private ObservableList<Data<String, Double>> prices = observableArrayList();
+        private final ObservableList<Data<String, Double>> prices = observableArrayList();
+        private final Series<String, Double> series;
 
-        StockPriceWatcher(String symbol) {
+        StockPrices(String symbol) {
             //this can't stay like this, because we want to be able to switch out our clients easily
             StubStockClient.pricesFor(symbol).subscribe(this);
+            series = new Series<>(symbol, prices);
         }
 
-        ObservableList<Data<String, Double>> getData() {
-            return prices;
+        Series<String, Double> getSeries() {
+            return series;
         }
 
         @Override
