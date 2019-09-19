@@ -15,8 +15,7 @@ public class ClientApplication {
 		StubStockClient client = new StubStockClient();
 		Flux<Double> fake = client.pricesFor("FAKE");
 
-		fake.delayElements(Duration.ofSeconds(1))
-			.subscribe(System.out::println);
+		fake.subscribe(System.out::println);
 	}
 
 }
