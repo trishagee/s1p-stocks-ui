@@ -10,4 +10,9 @@ public class ClientAutoConfiguration {
     WebClient webClient() {
         return WebClient.builder().build();
     }
+
+    @Bean
+    StockClient stockClient() {
+        return new StubStockClient();
+    }
 }
