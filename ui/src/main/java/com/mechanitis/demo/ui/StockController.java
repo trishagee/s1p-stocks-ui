@@ -2,18 +2,17 @@ package com.mechanitis.demo.ui;
 
 import com.mechanitis.demo.client.StubStockClient;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
-import javafx.scene.chart.XYChart;
+import javafx.scene.chart.XYChart.Data;
+import javafx.scene.chart.XYChart.Series;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
 import java.util.function.Consumer;
 
 import static java.lang.String.valueOf;
-import static java.time.LocalDateTime.*;
+import static java.time.LocalDateTime.now;
 import static javafx.collections.FXCollections.observableArrayList;
 
 @Component
@@ -26,31 +25,34 @@ public class StockController {
     @FXML
     public void initialize() {
         //series is the UI (View) element
-        final XYChart.Series<String, Double> series = new XYChart.Series<>();
-        //needs to be wired in to the data (Model)
-        StockPriceWatcher stockPriceWatcher = new StockPriceWatcher();
+        final Series<String, Double> series = new Series<>();
+
+        final StockPriceWatcher stockPriceWatcher = new StockPriceWatcher();
         series.setData(stockPriceWatcher.getData());
 
         //a chart supports more than one series of data, so the data for the chart is a list of series
         //but we only have one element in this list, our single series
-        ObservableList<XYChart.Series<String, Double>> allSeriesForChart = observableArrayList(series);
-        chart.setData(allSeriesForChart);
+        chart.setData(observableArrayList(series));
 
-        StubStockClient stubStockClient = new StubStockClient();
-        stubStockClient.pricesFor("FAKE").subscribe(stockPriceWatcher);
+        new StubStockClient().pricesFor("FAKE").subscribe(stockPriceWatcher);
+
+        //A chart has multiple series
+        //A series is a list of Data points
+        //Each Data is a pair of String and Double
     }
 
-    private class StockPriceWatcher implements Consumer<Double> {
+    // The watcher is subscribed to a data source and updates the list that is displayed as a series
+    private static class StockPriceWatcher implements Consumer<Double> {
 
-        private ObservableList<XYChart.Data<String, Double>> prices = FXCollections.observableArrayList();
+        private ObservableList<Data<String, Double>> prices = observableArrayList();
 
-        ObservableList<XYChart.Data<String, Double>> getData() {
+        ObservableList<Data<String, Double>> getData() {
             return prices;
         }
 
         @Override
         public void accept(Double price) {
-            Platform.runLater(() -> prices.add(new XYChart.Data<>(valueOf(now().getSecond()), price)));
+            Platform.runLater(() -> prices.add(new Data<>(valueOf(now().getSecond()), price)));
         }
     }
 }
