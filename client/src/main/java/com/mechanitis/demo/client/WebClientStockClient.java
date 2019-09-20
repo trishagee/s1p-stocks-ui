@@ -8,10 +8,10 @@ import java.io.IOException;
 import java.time.Duration;
 
 @Log4j2
-public class WebSocketStockClient implements StockClient{
+public class WebClientStockClient implements StockClient{
     private final WebClient webClient;
 
-    WebSocketStockClient(WebClient webClient) {
+    WebClientStockClient(WebClient webClient) {
         this.webClient = webClient;
     }
 
