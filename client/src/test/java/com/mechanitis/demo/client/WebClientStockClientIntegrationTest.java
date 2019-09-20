@@ -8,7 +8,7 @@ class WebClientStockClientIntegrationTest {
 
     @Test
     void shouldConnectToServiceAndReturnValues() {
-        Flux<Double> prices = new WebClientStockClient(WebClient.builder().build()).pricesFor("TEST");
+        Flux<StockPrice> prices = new WebClientStockClient(WebClient.builder().build()).pricesFor("TEST");
 
         prices.take(10)
               .log()

@@ -16,11 +16,11 @@ public class WebClientStockClient implements StockClient{
     }
 
     @Override
-    public Flux<Double> pricesFor(String symbol) {
+    public Flux<StockPrice> pricesFor(String symbol) {
         return webClient.get()
                         .uri("http://localhost:8080/stocks/{symb}", symbol)
                         .retrieve()
-                        .bodyToFlux(Double.class)
+                        .bodyToFlux(StockPrice.class)
                         .retryBackoff(5, Duration.ofSeconds(1), Duration.ofSeconds(5))
                         .doOnError(IOException.class,
                                    e -> log.info(() -> "Closing stream for " + symbol + ". Received " + e.getMessage()));
