@@ -1,24 +1,31 @@
 package com.mechanitis.demo.client;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import lombok.RequiredArgsConstructor;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.messaging.rsocket.RSocketRequester;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Flux;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = ClientAutoConfiguration.class)
+@SpringBootApplication
 public class RSocketClientIntegrationTest {
 
-    @Autowired
-    private RSocketRequester rSocketRequester;
-
-    @Test
-    public void shouldConnectToAnRSocketBackEnd() {
-        new RSocketClient(rSocketRequester).pricesFor("RSOCKET_TEST")
-                                           .take(10)
-                                           .log()
-                                           .blockLast();
+    public static void main(String[] args) {
+        SpringApplication.run(RSocketClientIntegrationTest.class, args);
     }
 }
+
+@RestController
+@RequiredArgsConstructor
+class RSocketController {
+    private final RSocketRequester rSocketRequester;
+
+    @GetMapping
+    Flux<StockPrice> getPrices () {
+        return new RSocketClient(rSocketRequester).pricesFor("RSOCKET_TEST")
+                                           .take(5)
+                                           .log();
+    }
+}
+

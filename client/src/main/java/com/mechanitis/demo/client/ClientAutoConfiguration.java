@@ -20,10 +20,9 @@ public class ClientAutoConfiguration {
     }
 
     @Bean
-    RSocketRequester rSocketRequester() {
-        return RSocketRequester.builder()
-                               .connectTcp("localhost", 7000)
-                               .block();
+    RSocketRequester rSocketRequester(RSocketRequester.Builder builder) {
+        return builder.connectTcp("localhost", 7000)
+                      .block();
     }
 
 }
