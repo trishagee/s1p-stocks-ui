@@ -15,8 +15,8 @@ public class ClientAutoConfiguration {
     }
 
     @Bean
-    StockClient stockClient() {
-        return new StubStockClient();
+    StockClient stockClient(RSocketRequester.Builder builder) {
+        return new RSocketClient(rSocketRequester(builder));
     }
 
     @Bean
