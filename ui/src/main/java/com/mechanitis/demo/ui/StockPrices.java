@@ -1,6 +1,7 @@
 package com.mechanitis.demo.ui;
 
 import com.mechanitis.demo.client.StockClient;
+import com.mechanitis.demo.client.StockPrice;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.XYChart.Data;
@@ -14,7 +15,7 @@ import static javafx.collections.FXCollections.observableArrayList;
 
 // Subscribes to a data source and updates data to be displayed as a series
 // Model
-class StockPrices implements Consumer<Double> {
+class StockPrices implements Consumer<StockPrice> {
     // this is the data structure that JavaFX will watch to see what to draw
     private final ObservableList<Data<String, Double>> prices = observableArrayList();
     // this is the UI element for the data, the Series
@@ -30,7 +31,7 @@ class StockPrices implements Consumer<Double> {
     }
 
     @Override
-    public void accept(Double price) {
-        Platform.runLater(() -> prices.add(new Data<>(valueOf(now().getSecond()), price)));
+    public void accept(StockPrice price) {
+        Platform.runLater(() -> prices.add(new Data<>(String.valueOf(price.getTime().getSecond()), price.getPrice())));
     }
 }
