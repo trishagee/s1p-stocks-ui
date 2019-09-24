@@ -21,8 +21,8 @@ public class StockController {
     //this is the controller, and what it does is wires stuff together
     @FXML
     public void initialize() {
-        final StockPrices stockPrices1 = new StockPrices("FAKE", stockClient);
-        final StockPrices stockPrices2 = new StockPrices("DUMMY", stockClient);
+        final StockPrices stockPrices1 = new StockPrices("MDB", stockClient);
+        final StockPrices stockPrices2 = new StockPrices("GOOG", stockClient);
 
         //a chart supports more than one series of data, so the data for the chart is a list of series
         chart.setData(observableArrayList(stockPrices1.getSeries(),

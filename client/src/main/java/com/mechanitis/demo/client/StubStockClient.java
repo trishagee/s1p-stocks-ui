@@ -14,6 +14,6 @@ public class StubStockClient implements StockClient {
         final Random random = new Random();
         log.info("StubStockClient");
         return Flux.interval(Duration.ofSeconds(1L))
-                   .map(aLong -> new StockPrice(symbol, random.nextDouble() * 100, now()));
+                   .map(aLong -> new StockPrice(symbol, random.nextDouble(), now()));
     }
 }
