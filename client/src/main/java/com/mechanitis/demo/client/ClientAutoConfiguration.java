@@ -3,6 +3,7 @@ package com.mechanitis.demo.client;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.messaging.rsocket.RSocketRequester;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -15,8 +16,21 @@ public class ClientAutoConfiguration {
     }
 
     @Bean
-    StockClient stockClient(RSocketRequester.Builder builder) {
+    @Profile(ClientProfiles.RSOCKET)
+    StockClient rSocketStockClient(RSocketRequester.Builder builder) {
         return new RSocketClient(rSocketRequester(builder));
+    }
+
+    @Bean
+    @Profile(ClientProfiles.SSE)
+    StockClient webStockClient(WebClient webClient) {
+        return new WebClientStockClient(webClient);
+    }
+
+    @Bean
+    @Profile("default")
+    StockClient stubStockClient() {
+        return new StubStockClient();
     }
 
     @Bean
