@@ -4,6 +4,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
 import org.springframework.core.io.ClassPathResource;
@@ -15,9 +16,12 @@ import java.io.IOException;
 public class StageInitializer implements ApplicationListener<StockChartApplication.StageReadyEvent> {
 
     private ApplicationContext applicationContext;
+    private String applicationTitle;
 
-    StageInitializer(ApplicationContext applicationContext) {
+    StageInitializer(ApplicationContext applicationContext,
+                     @Value("${spring.application.ui.title}") String applicationTitle) {
         this.applicationContext = applicationContext;
+        this.applicationTitle = applicationTitle;
     }
 
     @Override
@@ -31,7 +35,7 @@ public class StageInitializer implements ApplicationListener<StockChartApplicati
             Parent load = fxmlLoader.load();
             stage.setScene(new Scene(load, 800, 600));
             // TODO: title
-            stage.setTitle("Stocks");
+            stage.setTitle(applicationTitle);
             stage.show();
 
         } catch (IOException e) {
