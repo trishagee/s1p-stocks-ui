@@ -18,20 +18,14 @@ public class ClientAutoConfiguration {
 
     @Bean
     @Profile(ClientProfiles.RSOCKET)
-    StockClient rSocketStockClient(RSocketRequester.Builder builder) {
-        return new RSocketClient(rSocketRequester(builder));
+    StockClient rSocketStockClient(RSocketRequester rSocketRequester) {
+        return new RSocketClient(rSocketRequester);
     }
 
     @Bean
     @Profile(ClientProfiles.SSE)
     StockClient webStockClient(WebClient webClient) {
         return new WebClientStockClient(webClient);
-    }
-
-    @Bean
-    @Profile("default")
-    StockClient stubStockClient() {
-        return new StubStockClient();
     }
 
     @Bean
