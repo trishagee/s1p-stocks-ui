@@ -4,12 +4,10 @@ package com.mechanitis.demo.ui;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ConfigurableApplicationContext;
 
-@SpringBootApplication
 public class StockChartApplication extends Application {
 
     private ConfigurableApplicationContext context;
@@ -22,7 +20,7 @@ public class StockChartApplication extends Application {
     @Override
     public void init() {
         this.context = new SpringApplicationBuilder()
-                .sources(StockChartApplication.class)
+                .sources(UiApplication.class)
                 .run();
     }
 
