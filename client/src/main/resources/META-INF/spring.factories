@@ -1,3 +1,3 @@
 # magic which enables me to use the configuration from Client in UI
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.mechanitis.demo.client.ClientAutoConfiguration
+  com.mechanitis.demo.client.kotlin.ClientAutoConfiguration

@@ -1,7 +1,7 @@
 package com.mechanitis.demo.ui;
 
-import com.mechanitis.demo.client.StockClient;
-import com.mechanitis.demo.client.StockPrice;
+import com.mechanitis.demo.client.kotlin.StockClient;
+import com.mechanitis.demo.client.kotlin.StockPrice;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
